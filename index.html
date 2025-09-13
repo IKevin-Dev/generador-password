@@ -1,0 +1,48 @@
+<!DOCTYPE html> <!-- Indica que este documento es HTML5 -->
+<html lang="es"> <!-- Inicia el documento y define el idioma en español -->
+<head>
+  <meta charset="UTF-8"> <!-- Soporte para caracteres especiales (ñ, tildes) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Ajusta el contenido para que se vea bien en móviles -->
+  <title>Generador de Contraseñas</title> <!-- Título que aparece en la pestaña del navegador -->
+  <link rel="stylesheet" href="style.css"> <!-- Enlaza el archivo de estilos CSS -->
+</head>
+<body>
+  <!-- Contenedor principal de toda la aplicación -->
+  <div class="container">
+    <h1>Generador de Contraseñas Seguras</h1> <!-- Título visible en la página -->
+
+    <!-- Sección donde se mostrará la contraseña generada -->
+    <div class="output">
+      <!-- Campo de texto donde aparecerá la contraseña (solo lectura) -->
+      <input type="text" id="password" readonly placeholder="Aquí aparecerá tu contraseña">
+      <!-- Botón para copiar la contraseña al portapapeles -->
+      <button id="copy">Copiar</button>
+    </div>
+
+    <!-- Selector para elegir la longitud de la contraseña -->
+    <label>Longitud:
+      <input type="number" id="length" min="4" max="30" value="12">
+      <!-- type="number" permite solo números / value="12" valor inicial -->
+    </label>
+
+    <!-- Opciones para elegir qué tipos de caracteres incluir -->
+    <div class="options">
+      <label><p><input type="checkbox" id="uppercase" checked> Mayúsculas</label></p>
+      <label><input type="checkbox" id="lowercase" checked> Minúsculas</label>
+      <label><p><input type="checkbox" id="numbers" checked> Números</label></p>
+      <label><input type="checkbox" id="symbols" checked> Símbolos</label>
+      <!-- checked = activado por defecto -->
+    </div>
+
+    <!-- Botón principal para generar la contraseña -->
+    <button id="generate">Generar Contraseña</button>
+  </div>
+
+        <!-- POPUP personalizado -->
+    <div id="popup" class="popup">¡Contraseña copiada!</div>
+
+  <!-- Enlace al archivo JavaScript que da funcionalidad -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+/* Estilo general del cuerpo de la página */
+body {
+  font-family: Arial, sans-serif; /* Fuente de texto */
+  background: linear-gradient(135deg, #667eea, #764ba2); /* Fondo degradado */
+  display: flex;                 /* Usamos Flexbox para centrar */
+  justify-content: center;       /* Centrar horizontalmente */
+  align-items: center;           /* Centrar verticalmente */
+  height: 100vh;                 /* Ocupa toda la altura de la pantalla */
+  margin: 0;                     /* Quita los márgenes por defecto */
+}
+
+/* Caja principal */
+.container {
+  background: #fff;              /* Fondo blanco */
+  padding: 20px;                 /* Espacio interno */
+  border-radius: 12px;           /* Esquinas redondeadas */
+  text-align: center;            /* Centrar texto */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Sombra para efecto de tarjeta */
+  width: 400px;                  /* Ancho fijo */
+}
+
+/* Sección donde aparece la contraseña */
+.output {
+  display: flex;                  /* Pone el input y el botón en la misma fila */
+  margin-bottom: 10px;            /* Espacio inferior */
+}
+
+/* Campo de texto de la contraseña */
+#password {
+  flex: 1;                        /* Ocupa el espacio disponible */
+  padding: 8px;                    /* Espacio interno */
+  border: 1px solid #ccc;          /* Borde gris claro */
+}
+
+/* Estilo general de los botones */
+button {
+  background: #667eea;            /* Color de fondo */
+  color: #fff;                    /* Texto blanco */
+  border: none;                   /* Sin borde */
+  padding: 10px;                   /* Espacio interno */
+  margin-top: 10px;                /* Espacio superior */
+  cursor: pointer;                 /* Manito al pasar */
+  border-radius: 6px;              /* Esquinas redondeadas */
+}
+
+/* Cambio de color cuando el ratón pasa sobre el botón */
+button:hover {
+  background: #556cd6;
+}
+
+#copy{
+    margin-left: 10px;
+}
+
+.options{
+    text-align: left;
+}
+
+#lenght{
+    border-radius: 40px;
+    text-align: center;
+}
+
+/* ---- POPUP ---- */
+.popup {
+    position: fixed; /* Permite que quede encima de todo */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #4CAF50;
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    font-size: 18px;
+    display: none;  /* Oculto al inicio */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.popup.show {
+    display: block;
+    opacity: 1;
+}
