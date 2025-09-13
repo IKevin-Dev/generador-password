@@ -1,63 +1,96 @@
+const passwordEl = document.getElementById('password');
+const lengthEl = document.getElementById('length');
+const upperEl = document.getElementById('uppercase');
+const lowerEl = document.getElementById('lowercase');
+const numberEl = document.getElementById('numbers');
+const symbolEl = document.getElementById('symbols');
+const generateBtn = document.getElementById('generate');
+const copyBtn = document.getElementById('copy');
 
-const passwordEl = document.getElementById('password'); // Campo donde se muestra la contraseña
-const lengthEl = document.getElementById('length');     // Input para elegir la longitud
-const upperEl = document.getElementById('uppercase');   // Checkbox de mayúsculas
-const lowerEl = document.getElementById('lowercase');   // Checkbox de minúsculas
-const numberEl = document.getElementById('numbers');    // Checkbox de números
-const symbolEl = document.getElementById('symbols');    // Checkbox de símbolos
-const generateBtn = document.getElementById('generate');// Botón para generar
-const copyBtn = document.getElementById('copy');        // Botón para copiar
+const strengthBar = document.getElementById('strength-bar');
+const strengthText = document.getElementById('strength-text');
 
-//Definición de caracteres
-const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";   
-const lower = "abcdefghijklmnopqrstuvwxyz";    
-const numbers = "0123456789";                 
-const symbols = "!@#$%^&*()_+[]{}|;:,.<>?";     
+// Caracteres
+const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const lower = "abcdefghijklmnopqrstuvwxyz";
+const numbers = "0123456789";
+const symbols = "!@#$%^&*()_+[]{}|;:,.<>?";
 
-// Generar contraseña
+// Evaluar fuerza
+function evaluarSeguridad(pass) {
+  let fuerza = 0;
+
+  if (pass.length >= 8) fuerza++;
+  if (/[A-Z]/.test(pass)) fuerza++;
+  if (/[a-z]/.test(pass)) fuerza++;
+  if (/\d/.test(pass)) fuerza++;
+  if (/[^A-Za-z0-9]/.test(pass)) fuerza++;
+
+  let ancho = (fuerza / 5) * 100;
+  strengthBar.style.width = ancho + "%";
+
+  if (fuerza <= 2) {
+    strengthBar.style.background = "red";
+    strengthText.textContent = "Contraseña débil 🔴";
+  } else if (fuerza === 3) {
+    strengthBar.style.background = "orange";
+    strengthText.textContent = "Contraseña media 🟠";
+  } else if (fuerza === 4) {
+    strengthBar.style.background = "yellow";
+    strengthText.textContent = "Contraseña buena 🟡";
+  } else {
+    strengthBar.style.background = "green";
+    strengthText.textContent = "Contraseña muy segura 🟢";
+  }
+
+  if (pass.length === 0) {
+    strengthBar.style.width = "0%";
+    strengthText.textContent = "Escribe o genera una contraseña para evaluar su seguridad";
+  }
+}
+
+// Generar contraseña aleatoria
 generateBtn.addEventListener('click', () => {
-  let chars = ''; 
+  let chars = '';
 
-  //Opciones seleccionadas
   if (upperEl.checked) chars += upper;
   if (lowerEl.checked) chars += lower;
   if (numberEl.checked) chars += numbers;
   if (symbolEl.checked) chars += symbols;
 
-  const length = parseInt(lengthEl.value); 
+  const length = parseInt(lengthEl.value);
 
-  // Mensaje si el usuario no selecciona ninguna opción
   if (chars === '') {
     alert('Debes seleccionar al menos una opción.');
-    return; 
+    return;
   }
 
-  // Creación de la contraseña
   let password = '';
   for (let i = 0; i < length; i++) {
     password += chars.charAt(Math.floor(Math.random() * chars.length));
   }
 
-  // Se muestra la contraseña en el input
   passwordEl.value = password;
-  
+  evaluarSeguridad(password); // Evalúa inmediatamente
 });
 
-copyBtn.addEventListener('click', () => {
-  
-  if (passwordEl.value) {
-    navigator.clipboard.writeText(passwordEl.value) 
-      .then(() => {
-            
-            popup.classList.add("show");
+// Evaluar seguridad mientras el usuario escribe su propia contraseña
+passwordEl.addEventListener('input', () => {
+  evaluarSeguridad(passwordEl.value);
+});
 
-            // Se oculta el pop-up después de 2 segundos
-            setTimeout(() => {
-                popup.classList.remove("show");
-            }, 2000);
-        })   // Mensaje de confirmación
-        .catch(err => console.error("Error al copiar:", err));
+// Copiar contraseña
+copyBtn.addEventListener('click', () => {
+  const popup = document.getElementById('popup');
+
+  if (passwordEl.value) {
+    navigator.clipboard.writeText(passwordEl.value)
+      .then(() => {
+        popup.classList.add("show");
+        setTimeout(() => popup.classList.remove("show"), 2000);
+      })
+      .catch(err => console.error("Error al copiar:", err));
   } else {
-    alert('Por favor genera una contraseña para copiar');
+    alert('Por favor ingresa o genera una contraseña para copiar');
   }
 });
